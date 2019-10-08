@@ -32,6 +32,7 @@ adc_config\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 adc_config\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 adc_config\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 adc_config\main.o: ../Inc/adc.h
+adc_config\main.o: ../Inc/dma.h
 adc_config\main.o: ../Inc/usart.h
 adc_config\main.o: ../Inc/gpio.h
 adc_config\main.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdarg.h

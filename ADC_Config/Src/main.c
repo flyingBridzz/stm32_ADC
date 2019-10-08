@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -48,7 +49,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+int VIS = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -77,7 +78,7 @@ void MyPrint(const char*frame,...)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	uint16_t DMA_Buffer[30];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -98,23 +99,23 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_ADC_Start(&hadc1);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)DMA_Buffer, 30);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		if(ADC1->SR & ADC_SR_EOC){
-		    MyPrint("ADC1 = %u\r\n",HAL_ADC_GetValue(&hadc1));
-			  //i++;
-				
-//        HAL_ADC_Start(&hadc1);			
-		}
-		HAL_Delay(150);
+			if(VIS == 1){
+				VIS = 0;
+				for(int i=0;i<30;i++)
+					MyPrint("ADC1 = %d\r\n",DMA_Buffer[i]);
+			}
+
 //		if(i>=2)
 //		{
 //			HAL_Delay(200);
@@ -175,7 +176,15 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hadc);
+  /* NOTE : This function Should not be modified, when the callback is needed,
+            the HAL_ADC_ConvCpltCallback could be implemented in the user file
+   */
+	VIS = 1;
+}
 /* USER CODE END 4 */
 
 /**

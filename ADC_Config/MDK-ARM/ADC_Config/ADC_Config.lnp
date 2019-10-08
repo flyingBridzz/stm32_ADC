@@ -3,6 +3,7 @@
 "adc_config\main.o"
 "adc_config\gpio.o"
 "adc_config\adc.o"
+"adc_config\dma.o"
 "adc_config\usart.o"
 "adc_config\stm32f4xx_it.o"
 "adc_config\stm32f4xx_hal_msp.o"

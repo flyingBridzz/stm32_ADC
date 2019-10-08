@@ -111,9 +111,10 @@ int main(void)
 		if(ADC1->SR & ADC_SR_EOC){
 		    MyPrint("ADC1 = %u\r\n",HAL_ADC_GetValue(&hadc1));
 			  //i++;
-				HAL_Delay(200);
+				
 //        HAL_ADC_Start(&hadc1);			
 		}
+		HAL_Delay(150);
 //		if(i>=2)
 //		{
 //			HAL_Delay(200);
